@@ -25,13 +25,11 @@ _zipify ()
 {
   echo ======== "$1" ========
   SZFILE=$(basename "$1" .zip).7z
-  mkdir "$1.dir"
-  cd "$1.dir"
+  mkdir "$1.dir" && cd "$1.dir"
   $UNZIP ../"$1"
   $SZIP a "$SZFILE" ./*
-  mv "$SZFILE" ..
-  cd ..
-  rm -rf "$1.dir"
+  mv "$SZFILE" .. 
+  cd .. && rm -rf "$1.dir"
   if [ -f ./"$SZFILE" ]; then
     rm "$1"
   fi
@@ -52,7 +50,11 @@ while [ $# -ne 0 ]; do
       done
     cd "$PWD"
   elif [ -f "$1" ]; then
-    _zipify "$1"
+    if $(file -i "$1" | grep -q 'application/zip'); then
+      _zipify "$1"
+    else
+      _die "$1 is not a zip file"
+    fi
   else
     _die "$1 does not exist"
   fi
