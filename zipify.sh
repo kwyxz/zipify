@@ -51,7 +51,9 @@ while [ $# -ne 0 ]; do
     cd "$PWD"
   elif [ -f "$1" ]; then
     if $(file -i "$1" | grep -q 'application/zip'); then
-      _zipify "$1"
+      cd $(dirname "$1")
+      _zipify $(basename "$1")
+      cd "$PWD"
     else
       _die "$1 is not a zip file"
     fi
