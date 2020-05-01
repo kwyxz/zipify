@@ -37,7 +37,7 @@ _zipify ()
     $UNZIP -q ../"$1"
     $SZIP a -sdel "$NEWFILE" ./*
     mv "$NEWFILE" ..
-    cd .. && rmdir "$1.dir"
+    cd .. && rm -rf "$1.dir"
     if [ -f ./"$NEWFILE" ]; then
       rm "$1"
     fi
