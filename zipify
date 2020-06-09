@@ -47,7 +47,7 @@ _zipify ()
     $SZIP x ../"$1"
     $ZIP -r "$NEWFILE" ./*
     mv "$NEWFILE" ..
-    cd .. && rmdir "$1.dir"
+    cd .. && rm -rf "$1.dir"
     if [ -f ./"$NEWFILE" ]; then
       rm "$1"
     fi
